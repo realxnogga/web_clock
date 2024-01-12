@@ -17,28 +17,63 @@
                 },
                 screens: {
                     'desktop': { 'max': '1366px' },
-                    'tablet': { 'max': '1000px' },
+                    'tablet': { 'max': '750px' },
                     'mobile': { 'max': '450px' },
                     'breakPoint': { 'max': '68rem' },
                 }
             }
         }
     </script>
+    <style>
+        .rotate{
+            transform: rotate(180deg);
+            transition: .5s ease;
+        }
+        .attribution {
+            font-size: 11px;
+            text-align: center;
+    }
+
+        .attribution a {
+            color: hsl(228, 45%, 44%);
+    }
+    </style>
 </head>
 
 <body class="h-screen w-screen bg-cover bg-no-repeat bg-center flex items-center justify-center"
     style="background-image: url(dayImage.jpg);">
 
-    <main class="bg-black bg-opacity-80 h-[32rem] w-[65rem] rounded-lg flex flex-col justify-between p-10
-    breakPoint:w-[90%] mobile:p-5">
-        <div class="h-fit max-w-[30rem] flex gap-y-3 flex-col justify-evenly mobile:text-center">
-            <div class=" w-full h-fit flex justify-center">
-                <div id="picContainer"
-                    class="h-[3rem] w-[3rem] rounded-[50%] border-2 border-blue-600 bg-cover bg-center bg-no-repeat">
+    <main class=" bg-black bg-opacity-80 h-[32rem] w-[65rem] rounded-lg flex flex-col justify-between p-10
+    breakPoint:w-[90%] tablet:h-[40rem]">
+
+        <div class="h-fit w-full flex items-start justify-between">
+            <div class="h-fit max-w-[30rem] flex gap-y-3 flex-col justify-evenly mobile:text-center tablet:mt-16">
+                <div class="w-full h-fit flex justify-center">
+                    <div id="picContainer"
+                        class="h-[3rem] w-[3rem] rounded-[50%] border-2 border-blue-600 bg-cover bg-center bg-no-repeat">
+                    </div>
+                </div>
+                <p id="quotes" class="text-gray-400 text-xl italic"></p>
+                <p id="whoSaid" class="text-gray-500 shadow-teal-700"></p>
+            </div>
+            <div class="flex flex-col gap-y-5 items-end tablet:absolute tablet:items-start">
+                <button id="more"
+                    class="bg-white h-8 w-24 rounded-full pr-1 pl-4 text-lg flex items-center justify-between">
+                    <p class="font-semibold">more</p>
+                    <div id="circleArrow" class="h-[1.7rem] w-[1.7rem] rounded-full bg-black">
+                        <i class="fa-solid fa-chevron-down fa-xs" style="color: #ffffff;"></i>
+                    </div>
+                </button>
+                <div id="content" class="bg-black bg-opacity-50 tablet:bg-opacity-90 py-5 px-8 justify-between h-fit w-fit text-white">
+                    <ul class="text-2xl leading-[3rem]">
+                        <li id="day"></li>
+                        <li id="month"></li>
+                        <li id="year"></li>
+
+                    </ul>
                 </div>
             </div>
-            <p id="quotes" class="text-gray-400 text-xl italic"></p>
-            <p id="whoSaid" class="text-gray-500 shadow-teal-700"></p>
+
         </div>
         <h1 id="t" class="text-white"></h1>
         <div class="flex flex-wrap gap-6 justify-between items-baseline">
@@ -54,6 +89,10 @@
 
         </div>
     </main>
+    <div class="attribution absolute botton-0">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+        Coded by <a href="https://www.facebook.com/alupihang.dagat.142/">realxnogga</a>.
+    </div>
 
     <script>
         $('document').ready(function () {
@@ -66,6 +105,16 @@
 
             $('#time').text(hours + ":" + minute);
             $('#period').text(period);
+
+            var year = d.getFullYear();
+            var month = d.toLocaleString('en-US', { month: 'long' });
+            var day = d.getDay();
+
+            const dayArray = ['Monday', 'Tuesday', 'Wednesday', 'Thuesday', 'Friday', 'Sunday', 'Saturday'];
+
+            $('#day').text(dayArray[day - 1]);
+            $('#month').text(month);
+            $('#year').text(year);
 
             // ---------------------------
 
@@ -115,20 +164,37 @@
             $('#picContainer').hover(
 
                 function () {
-                    $(this).css('box-shadow', 'rgba(37,99,235,1) 0px 1px 106px 37px');       
+                    $(this).css('box-shadow', 'rgba(37,99,235,1) 0px 1px 106px 37px');
                 },
                 function () {
                     $(this).css('box-shadow', 'none');
                 }
             );
 
+            // ----------------------
+            $('#content').css('display', 'none');
+            $('#more').click(function () {
+                $('#content').slideToggle('slow');
+            })
+
+            $('#more').hover(
+                function () {
+                    $(this).css('box-shadow', 'rgba(255,255,255,0.75) 2px 0px 35px 10px');
+                },
+                function () {
+                    $(this).css('box-shadow', 'none');
+                }
+            )
+            // -------------------------
+            $('#more').click(function () {
+                $('#circleArrow').toggleClass('rotate');
+                $('#circleArrow').css('transition', '.5s ease');
+            })
+            
         })
 
     </script>
-
-
-
-
+<script src="https://kit.fontawesome.com/2387e97428.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
